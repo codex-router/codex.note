@@ -1,11 +1,11 @@
-# codex.note
+# codex.insight
 
-AI-assisted code note generator for **C**, **C++**, **Java**, **Go**, **Python**, **Bash**, **JavaScript/TypeScript**, and **Rust** projects.
+AI-assisted code insight generator for **C**, **C++**, **Java**, **Go**, **Python**, **Bash**, **JavaScript/TypeScript**, and **Rust** projects.
 
 This module provides a practical two-pass pipeline:
 
 1. **Analysis pass**: summarize each module from source chunks into structured JSON.
-2. **Note pass**: generate Markdown note pages from those summaries.
+2. **Insight pass**: generate Markdown insight pages from those summaries.
 
 It is model-agnostic and works with OpenAI-compatible chat-completions endpoints.
 
@@ -15,7 +15,7 @@ It is model-agnostic and works with OpenAI-compatible chat-completions endpoints
 
 - Scans supported source files recursively (C/C++, Java, Go, Python, Bash, JavaScript/TypeScript, Rust)
 - Splits large repositories into prompt-friendly chunks
-- Generates one note page per top-level module plus a system overview
+- Generates one insight page per top-level module plus a system overview
 - Generates calling graphs using Mermaid diagrams
 - Stores intermediate analysis artifacts for traceability
 - Supports `--dry-run` to preview plan without model calls
@@ -47,23 +47,23 @@ export LITELLM_MODEL="ollama-gemini-3-flash-preview"
 ### 2) Run generator
 
 ```bash
-python generate_note.py --repo /path/to/project --out ./note
+python generate_insight.py --repo /path/to/project --out ./insight
 ```
 
 This writes:
 
-- `note/System-Architecture.md`
-- `note/<module>.md` pages
-- `.codex-note/analysis/*.json` intermediate files
+- `insight/System-Architecture.md`
+- `insight/<module>.md` pages
+- `.codex-insight/analysis/*.json` intermediate files
 
 ---
 
 ## Usage
 
 ```text
-python generate_note.py \
+python generate_insight.py \
 	--repo <path-to-project> \
-	--out <path-to-note-output> \
+	--out <path-to-insight-output> \
 	[--max-files-per-module 40] \
 	[--max-chars-per-file 10000] \
 	[--include "src/**"] \
@@ -73,24 +73,24 @@ python generate_note.py \
 
 ### Common examples
 
-Generate note for a Java/Maven project:
+Generate insight for a Java/Maven project:
 
 ```bash
-python generate_note.py --repo /path/to/project --out ./note
+python generate_insight.py --repo /path/to/project --out ./insight
 ```
 
-Generate note for a Go/Python/JS/Rust monorepo:
+Generate insight for a Go/Python/JS/Rust monorepo:
 
 ```bash
-python generate_note.py --repo /path/to/repo --out ./note
+python generate_insight.py --repo /path/to/repo --out ./insight
 ```
 
-Generate note while limiting scope:
+Generate insight while limiting scope:
 
 ```bash
-python generate_note.py \
+python generate_insight.py \
 	--repo /path/to/project \
-	--out ./note \
+	--out ./insight \
 	--include "src/**" \
 	--exclude "**/third_party/**"
 ```
@@ -98,7 +98,7 @@ python generate_note.py \
 Preview modules and chunking only:
 
 ```bash
-python generate_note.py --repo /path/to/project --out ./note --dry-run
+python generate_insight.py --repo /path/to/project --out ./insight --dry-run
 ```
 
 ---
@@ -108,7 +108,7 @@ python generate_note.py --repo /path/to/project --out ./note --dry-run
 Build image:
 
 ```bash
-docker build -t craftslab/codex-note:latest .
+docker build -t craftslab/codex-insight:latest .
 ```
 
 Run container:
@@ -119,9 +119,9 @@ docker run --rm \
 	-e LITELLM_API_KEY="$LITELLM_API_KEY" \
 	-e LITELLM_MODEL="${LITELLM_MODEL:-ollama-gemini-3-flash-preview}" \
 	-v "/path/to/workspace:/workspace" \
-	craftslab/codex-note:latest \
+	craftslab/codex-insight:latest \
 	--repo /workspace/project \
-	--out /workspace/note
+	--out /workspace/insight
 ```
 
 ---
@@ -131,7 +131,7 @@ docker run --rm \
 Templates are plain text files under `prompts/`:
 
 - `prompts/analysis_prompt.txt`
-- `prompts/note_prompt.txt`
+- `prompts/insight_prompt.txt`
 
 You can edit these templates to tune output style or enforce internal standards.
 
@@ -140,15 +140,15 @@ You can edit these templates to tune output style or enforce internal standards.
 ## Output Structure
 
 ```text
-codex.note/
-	generate_note.py
+codex.insight/
+	generate_insight.py
 	prompts/
 		analysis_prompt.txt
-		note_prompt.txt
-	note/
+		insight_prompt.txt
+	insight/
 		System-Architecture.md
 		<module>.md
-	.codex-note/
+	.codex-insight/
 		analysis/
 			<module>.json
 ```

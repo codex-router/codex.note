@@ -6,5 +6,5 @@ set -e
 # Change to the directory where the script is located
 cd "$(dirname "$0")"
 
-echo "Building craftslab/codex-note:latest Docker image..."
-docker build -t craftslab/codex-note:latest .
+echo "Building craftslab/codex-insight:latest Docker image..."
+docker build -t craftslab/codex-insight:latest .

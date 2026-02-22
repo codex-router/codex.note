@@ -10,4 +10,4 @@ ENV LITELLM_BASE_URL="https://litellm.com/v1"
 ENV LITELLM_API_KEY=""
 ENV LITELLM_MODEL="ollama-gemini-3-flash-preview"
 
-ENTRYPOINT ["python", "generate_note.py"]
+ENTRYPOINT ["python", "generate_insight.py"]
