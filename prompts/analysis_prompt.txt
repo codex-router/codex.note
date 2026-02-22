@@ -1,0 +1,58 @@
+You are a senior software maintainer and code archaeologist.
+
+Task:
+- Analyze one module from C/C++/Java repository snippets.
+- Return JSON only.
+- Use only the provided snippets as evidence.
+- If evidence is missing, mark fields with "TBD".
+
+Required JSON schema:
+{
+  "module": "string",
+  "purpose": "string",
+  "key_types": [
+    {
+      "name": "string",
+      "kind": "struct|class|enum|interface|function|other",
+      "summary": "string",
+      "evidence": ["snippet_id:path or quoted excerpt"]
+    }
+  ],
+  "public_functions": [
+    {
+      "name": "string",
+      "signature": "string",
+      "behavior": "string",
+      "evidence": ["snippet_id:path or quoted excerpt"]
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "string",
+      "type": "internal|external|standard-library|TBD",
+      "usage": "string",
+      "evidence": ["snippet_id:path or quoted excerpt"]
+    }
+  ],
+  "control_flow": [
+    "bullet-like short statement with evidence"
+  ],
+  "build_targets": [
+    {
+      "target": "string",
+      "build_hint": "string",
+      "evidence": ["snippet_id:path or quoted excerpt"]
+    }
+  ],
+  "risks": [
+    "string"
+  ],
+  "open_questions": [
+    "string"
+  ]
+}
+
+Rules:
+- Be concise and concrete.
+- Do not invent symbols not present in snippets.
+- Keep arrays empty if unknown, instead of guessing.
