@@ -22,6 +22,18 @@ SOURCE_EXTENSIONS = {
     ".hh",
     ".hxx",
     ".java",
+    ".go",
+    ".py",
+    ".pyi",
+    ".sh",
+    ".bash",
+    ".js",
+    ".mjs",
+    ".cjs",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".rs",
 }
 
 
@@ -33,7 +45,7 @@ class FileSnippet:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate code note from C/C++/Java repos using AI prompts.",
+        description="Generate code note from C/C++/Java/Go/Python/Bash/JavaScript/TypeScript/Rust repos using AI prompts.",
     )
     parser.add_argument("--repo", required=True, help="Path to target source repository")
     parser.add_argument("--out", required=True, help="Path to generated note directory")
@@ -252,7 +264,9 @@ def main() -> int:
     )
 
     if not modules:
-        raise SystemExit("No matching C/C++/Java files were found.")
+        raise SystemExit(
+            "No matching source files were found for supported languages: C/C++, Java, Go, Python, Bash, JavaScript, TypeScript, Rust."
+        )
 
     print(f"Discovered {len(source_files)} source files in {len(modules)} modules")
     for module, snippets in sorted(modules.items()):

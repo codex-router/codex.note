@@ -1,6 +1,6 @@
 # codex.note
 
-AI-assisted code note generator for **C**, **C++**, and **Java** projects.
+AI-assisted code note generator for **C**, **C++**, **Java**, **Go**, **Python**, **Bash**, **JavaScript/TypeScript**, and **Rust** projects.
 
 This module provides a practical two-pass pipeline:
 
@@ -13,7 +13,7 @@ It is model-agnostic and works with OpenAI-compatible chat-completions endpoints
 
 ## Features
 
-- Scans C/C++/Java source files recursively
+- Scans supported source files recursively (C/C++, Java, Go, Python, Bash, JavaScript/TypeScript, Rust)
 - Splits large repositories into prompt-friendly chunks
 - Generates one note page per top-level module plus a system overview
 - Stores intermediate analysis artifacts for traceability
@@ -71,6 +71,12 @@ Generate note for a Java/Maven project:
 
 ```bash
 python generate_note.py --repo /path/to/project --out ./note
+```
+
+Generate note for a Go/Python/JS/Rust monorepo:
+
+```bash
+python generate_note.py --repo /path/to/repo --out ./note
 ```
 
 Generate note while limiting scope:
