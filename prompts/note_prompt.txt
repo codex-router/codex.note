@@ -11,13 +11,15 @@ Output format (Markdown):
 3) ## Architecture
 4) ## API Reference
 5) ## Dependencies
-6) ## Build & Run
-7) ## Typical Flows
-8) ## Risks
-9) ## Open Questions
+6) ## Calling Graph
+7) ## Build & Run
+8) ## Typical Flows
+9) ## Risks
+10) ## Open Questions
 
 Rules:
 - Keep sections short and actionable.
 - Use bullets for APIs and dependencies.
 - For API items include: name/signature, behavior summary.
+- For Calling Graph, generate a Mermaid diagram (e.g., `graph TD`) based on the call_graph data.
 - Do not include hidden reasoning.

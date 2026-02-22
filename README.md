@@ -16,6 +16,7 @@ It is model-agnostic and works with OpenAI-compatible chat-completions endpoints
 - Scans supported source files recursively (C/C++, Java, Go, Python, Bash, JavaScript/TypeScript, Rust)
 - Splits large repositories into prompt-friendly chunks
 - Generates one note page per top-level module plus a system overview
+- Generates calling graphs using Mermaid diagrams
 - Stores intermediate analysis artifacts for traceability
 - Supports `--dry-run` to preview plan without model calls
 
