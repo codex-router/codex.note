@@ -35,7 +35,7 @@ It is model-agnostic and works with OpenAI-compatible chat-completions endpoints
 ```bash
 export LITELLM_BASE_URL="https://litellm.com/v1"
 export LITELLM_API_KEY="<your-api-key>"
-export LITELLM_MODEL="ollama-kimi-k2.5"
+export LITELLM_MODEL="ollama-gemini-3-flash-preview"
 ```
 
 `LITELLM_BASE_URL` accepts either:
@@ -116,7 +116,7 @@ Run container:
 docker run --rm \
 	-e LITELLM_BASE_URL="${LITELLM_BASE_URL:-https://litellm.com/v1}" \
 	-e LITELLM_API_KEY="$LITELLM_API_KEY" \
-	-e LITELLM_MODEL="${LITELLM_MODEL:-ollama-kimi-k2.5}" \
+	-e LITELLM_MODEL="${LITELLM_MODEL:-ollama-gemini-3-flash-preview}" \
 	-v "/path/to/workspace:/workspace" \
 	craftslab/codex-note:latest \
 	--repo /workspace/project \

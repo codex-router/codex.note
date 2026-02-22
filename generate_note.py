@@ -162,7 +162,7 @@ def resolve_chat_completions_url(api_base: str) -> str:
 def make_chat_request(messages: list[dict[str, str]]) -> str:
     api_base = os.getenv("LITELLM_BASE_URL", "https://litellm.com/v1").rstrip("/")
     api_key = os.getenv("LITELLM_API_KEY")
-    model = os.getenv("LITELLM_MODEL", "ollama-kimi-k2.5")
+    model = os.getenv("LITELLM_MODEL", "ollama-gemini-3-flash-preview")
 
     if not api_key:
         raise RuntimeError("LITELLM_API_KEY is required")
@@ -239,7 +239,17 @@ def generate_module_analysis(module: str, snippets: list[FileSnippet], analysis_
             {"role": "user", "content": user_payload},
         ]
     )
-    return json.loads(content)
+    content = content.strip()
+    start = content.find("{")
+    end = content.rfind("}")
+    if start != -1 and end != -1 and end >= start:
+        content = content[start:end+1]
+    if not content:
+        return {}
+    try:
+        return json.loads(content)
+    except json.JSONDecodeError:
+        return {}
 
 
 def generate_module_note(module: str, analysis_json: dict, note_prompt: str) -> str:

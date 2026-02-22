@@ -8,6 +8,6 @@ COPY . .
 # Default OpenAI-compatible endpoint/model; API key should be provided at runtime
 ENV LITELLM_BASE_URL="https://litellm.com/v1"
 ENV LITELLM_API_KEY=""
-ENV LITELLM_MODEL="ollama-kimi-k2.5"
+ENV LITELLM_MODEL="ollama-gemini-3-flash-preview"
 
 ENTRYPOINT ["python", "generate_note.py"]
