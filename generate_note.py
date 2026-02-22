@@ -150,6 +150,15 @@ def load_snippets(
     return modules
 
 
+def resolve_chat_completions_url(api_base: str) -> str:
+    normalized = api_base.rstrip("/")
+    if normalized.endswith("/chat/completions"):
+        return normalized
+    if normalized.endswith("/v1"):
+        return f"{normalized}/chat/completions"
+    return f"{normalized}/v1/chat/completions"
+
+
 def make_chat_request(messages: list[dict[str, str]]) -> str:
     api_base = os.getenv("LITELLM_BASE_URL", "https://litellm.com/v1").rstrip("/")
     api_key = os.getenv("LITELLM_API_KEY")
@@ -164,13 +173,16 @@ def make_chat_request(messages: list[dict[str, str]]) -> str:
         "messages": messages,
     }
     data = json.dumps(payload).encode("utf-8")
+    request_url = resolve_chat_completions_url(api_base)
 
     req = request.Request(
-        url=f"{api_base}/chat/completions",
+        url=request_url,
         data=data,
         headers={
             "Content-Type": "application/json",
             "Authorization": f"Bearer {api_key}",
+            "Accept": "application/json",
+            "User-Agent": "codex-note/1.0",
         },
         method="POST",
     )
@@ -180,7 +192,15 @@ def make_chat_request(messages: list[dict[str, str]]) -> str:
             body = resp.read().decode("utf-8")
     except error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"AI request failed: {exc.code} {detail}") from exc
+        if exc.code in (401, 403):
+            raise RuntimeError(
+                "AI request failed: "
+                f"{exc.code} {detail}. "
+                f"url={request_url}. "
+                "Check LITELLM_BASE_URL and LITELLM_API_KEY; for OpenAI-compatible gateways, "
+                "use a base URL like https://host/v1 or https://host/openai."
+            ) from exc
+        raise RuntimeError(f"AI request failed: {exc.code} {detail}. url={request_url}") from exc
     except error.URLError as exc:
         raise RuntimeError(f"AI request failed: {exc}") from exc
 

@@ -38,6 +38,11 @@ export LITELLM_API_KEY="<your-api-key>"
 export LITELLM_MODEL="ollama-kimi-k2.5"
 ```
 
+`LITELLM_BASE_URL` accepts either:
+
+- a full API root ending in `/v1` (for example `https://litellm.com/v1`)
+- or a gateway root like `https://your-gateway/openai` (the tool auto-appends `/v1/chat/completions`)
+
 ### 2) Run generator
 
 ```bash
